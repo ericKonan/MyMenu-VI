@@ -3,7 +3,7 @@ package com.ocr.anthony;
 import java.util.Scanner;
 
 public class Order {
-    Scanner sc = new Scanner(System.in);
+    static Scanner sc = new Scanner(System.in);
 
     /**
      * Display all available menus in the restaurant.
@@ -46,37 +46,15 @@ public class Order {
             this.displaySelectedMenu(nbMenu);
             switch (nbMenu) {
                 case 1:
-                    displayAvailableSide(true);
-                    int nbSide;
-                    do {
-                        nbSide = sc.nextInt();
-                        displaySelectedSide(nbSide, true);
-                    } while (nbSide < 1 || nbSide > 3);
-                    displayAvailableDrink();
-                    int nbDrink;
-                    do {
-                        nbDrink = sc.nextInt();
-                        displaySelectedDrink(nbDrink);
-                    } while (nbDrink < 1 || nbDrink > 3);
+                    askSide(true);
+                    askDrink();
                     break;
                 case 2:
-                    displayAvailableSide(true);
-                    do {
-                        nbSide = sc.nextInt();
-                        displaySelectedSide(nbSide, true);
-                    } while (nbSide < 1 || nbSide > 3);
+                    askSide(true);
                     break;
                 case 3:
-                    displayAvailableSide(false);
-                    do {
-                        nbSide = sc.nextInt();
-                        displaySelectedSide(nbSide, false);
-                    } while (nbSide < 1 || nbSide > 2);
-                    displayAvailableDrink();
-                    do {
-                        nbDrink = sc.nextInt();
-                        displaySelectedDrink(nbDrink);
-                    } while (nbDrink < 1 || nbDrink > 3);
+                    askSide(false);
+                    askDrink();
                     break;
             }
         } while (nbMenu < 1 || nbMenu > 3);
@@ -176,5 +154,35 @@ public class Order {
         System.out.println("2 - eau gazeuse");
         System.out.println("3 - soda");
         System.out.println("Que souhaitez-vous comme boisson ?");
+    }
+    
+    
+    /**
+     * Display a question about menu in the standard input, get response and display it
+     */
+    public void askMenu() {
+        String[] menus = {"poulet", "boeuf", "végétarien"};
+       Interaction.askSomething("menu", menus);
+    }
+
+    /**
+     * Display a question about side in the standard input, get response and display it
+     */
+    public void askSide(boolean allSidesEnable) {
+        if (allSidesEnable) {
+            String[] responsesAllSide = {"légumes frais", "frites", "riz"};
+            Interaction.askSomething("accompagnement", responsesAllSide);
+        } else {
+            String[] responsesOnlyRice = {"riz", "pas de riz"};
+            Interaction.askSomething("accompagnement", responsesOnlyRice);
+        }
+    }
+
+    /**
+     * Display a question about drink in the standard input, get response and display it
+     */
+    public void askDrink() {
+        String[] responsesDrink = {"eau plate", "eau gazeuse", "soda"};
+        Interaction.askSomething("boisson", responsesDrink);
     }
 }
